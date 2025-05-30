@@ -1,0 +1,12 @@
+{
+  "name": "info-collector",
+  "version": "1.0.0",
+  "description": "Collecte d'infos client et enregistrement local",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}

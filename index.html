@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Collecte d'information</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 100px;
+    }
+    .loader {
+      font-size: 1.5em;
+      animation: blink 1.4s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+  <h1 class="loader">Chargement des informations...</h1>
+  <script>
+    async function collectInfo() {
+      const info = {
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        platform: navigator.platform,
+        cookiesEnabled: navigator.cookieEnabled,
+        screen: {
+          width: screen.width,
+          height: screen.height,
+          colorDepth: screen.colorDepth
+        },
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        date: new Date().toISOString()
+      };
+
+      try {
+        const res = await fetch("https://api64.ipify.org?format=json");
+        const data = await res.json();
+        info.ip = data.ip;
+      } catch {
+        info.ip = "Erreur IP";
+      }
+
+      try {
+        await fetch("/save-info", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(info)
+        });
+        document.querySelector(".loader").textContent = "✅ Données envoyées.";
+      } catch {
+        document.querySelector(".loader").textContent = "❌ Échec d'envoi.";
+      }
+    }
+
+    collectInfo();
+  </script>
+</body>
+</html>
