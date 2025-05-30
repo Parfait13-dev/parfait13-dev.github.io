@@ -15,6 +15,27 @@
       font-size: 1.5em;
       animation: blink 1.4s infinite;
     }
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #1e88e5;
+      color: white;
+    }
+    pre {
+      margin-top: 20px;
+      text-align: left;
+      white-space: pre-wrap;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #1f1f1f;
+      padding: 20px;
+      border-radius: 10px;
+    }
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
@@ -23,6 +44,9 @@
 </head>
 <body>
   <h1 class="loader">Chargement des informations...</h1>
+  <button onclick="afficherInfos()">📄 Voir les infos collectées</button>
+  <pre id="affichageInfos"></pre>
+
   <script>
     async function collectInfo() {
       const info = {
@@ -57,6 +81,12 @@
       } catch {
         document.querySelector(".loader").textContent = "❌ Échec d'envoi.";
       }
+    }
+
+    async function afficherInfos() {
+      const res = await fetch("/infos");
+      const data = await res.json();
+      document.getElementById("affichageInfos").textContent = JSON.stringify(data, null, 2);
     }
 
     collectInfo();
