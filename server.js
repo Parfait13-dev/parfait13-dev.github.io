@@ -52,3 +52,12 @@ app.get("/infos", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Serveur en ligne sur http://localhost:${PORT}`);
 });
+// Route pour télécharger le fichier infos.json
+app.get("/telecharger-infos", (req, res) => {
+  const filePath = path.join(__dirname, "infos.json");
+  if (fs.existsSync(filePath)) {
+    res.download(filePath, "infos.json");
+  } else {
+    res.status(404).send("Aucune donnée disponible.");
+  }
+});
