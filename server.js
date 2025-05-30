@@ -33,6 +33,22 @@ app.post("/save-info", (req, res) => {
   });
 });
 
+// Lire les infos collectées
+app.get("/infos", (req, res) => {
+  const file = path.join(__dirname, "infos.json");
+
+  if (fs.existsSync(file)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(file));
+      return res.json(data);
+    } catch {
+      return res.status(500).json({ error: "Erreur de lecture" });
+    }
+  } else {
+    return res.json([]);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Serveur en ligne sur http://localhost:${PORT}`);
 });
