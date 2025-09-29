@@ -1,95 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Collecte d'information</title>
-  <style>
-    body {
-      background-color: #121212;
-      color: white;
-      font-family: sans-serif;
-      text-align: center;
-      padding-top: 100px;
-    }
-    .loader {
-      font-size: 1.5em;
-      animation: blink 1.4s infinite;
-    }
-    button {
-      margin-top: 30px;
-      padding: 10px 20px;
-      font-size: 1em;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      background-color: #1e88e5;
-      color: white;
-    }
-    pre {
-      margin-top: 20px;
-      text-align: left;
-      white-space: pre-wrap;
-      max-width: 90%;
-      margin-left: auto;
-      margin-right: auto;
-      background-color: #1f1f1f;
-      padding: 20px;
-      border-radius: 10px;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Une pute nommée Laromancia</title>
 </head>
 <body>
-  <h1 class="loader">Chargement des informations...</h1>
-  <button onclick="afficherInfos()">📄 Voir les infos collectées</button>
-  <pre id="affichageInfos"></pre>
-
-  <script>
-    async function collectInfo() {
-      const info = {
-        userAgent: navigator.userAgent,
-        language: navigator.language,
-        platform: navigator.platform,
-        cookiesEnabled: navigator.cookieEnabled,
-        screen: {
-          width: screen.width,
-          height: screen.height,
-          colorDepth: screen.colorDepth
-        },
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        date: new Date().toISOString()
-      };
-
-      try {
-        const res = await fetch("https://api64.ipify.org?format=json");
-        const data = await res.json();
-        info.ip = data.ip;
-      } catch {
-        info.ip = "Erreur IP";
-      }
-
-      try {
-        await fetch("/save-info", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(info)
-        });
-        document.querySelector(".loader").textContent = "✅ Données envoyées.";
-      } catch {
-        document.querySelector(".loader").textContent = "❌ Échec d'envoi.";
-      }
-    }
-
-    async function afficherInfos() {
-      const res = await fetch("/infos");
-      const data = await res.json();
-      document.getElementById("affichageInfos").textContent = JSON.stringify(data, null, 2);
-    }
-
-    collectInfo();
-  </script>
+    <h1>Une pute nommée Laromancia</h1>
+    <video width="640" height="360" controls>
+        <source src="laro.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la balise vidéo.
+    </video>
 </body>
 </html>
